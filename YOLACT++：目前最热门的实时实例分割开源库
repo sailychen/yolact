@@ -1,0 +1,134 @@
+YOLACT++：目前最热门的实时实例分割开源库
+原创： CV君 我爱计算机视觉 3天前
+点击我爱计算机视觉标星，更快获取CVML新技术
+
+
+
+
+
+
+
+
+
+
+
+YOLACT 是ICCV 2019 接收的实时实例分割论文 YOLACT: Real-time Instance Segmentation 提出的算法，近期该文作者又对此进行了扩展，提出YOLACT++：Better Real-time Instance Segmentation，其 resnet50 模型在Titan Xp 上运行速度达 33.5 fps，在COCO 的test-dev数据集上达到34.1 mAP，并开源了代码。
+
+
+
+
+
+
+
+论文作者/代码开发者来自加州大学戴维斯分校。
+
+
+
+下图为YOLACT/YOLACT++ 与其他实例分割算法速度和精度的比较：
+
+
+
+
+
+可见 YOLACT 系列具有较大的速度优势，YOLACT++ 则又在 YOLACT基础上精度提高不少。
+
+
+
+以下视频为该文作者在ICCV 2019 公布的实例分割Demo：
+
+
+
+
+
+
+
+这些结果并非后期处理的，而是在GPU上实时运行出来的。
+
+
+
+YOLACT 网络架构：
+
+
+
+
+
+
+
+在COCO数据集上与其他算法更详细的比较结果：
+
+
+
+
+
+
+
+YOLACT / YOLACT++ 取得了速度最快的同时，取得了不错的分割精度。
+
+
+
+作者已经开源了多个模型：
+
+
+
+
+
+
+
+并提供了代码，可以很方便在COCO数据集上评测性能：
+
+# Display qualitative results on COCO. From here on I'll use a confidence threshold of 0.15.
+python eval.py --trained_model=weights/yolact_base_54_800000.pth --score_threshold=0.15 --top_k=15 --display
+
+
+以及对图像和视频上跑实例分割：
+
+# Display qualitative results on the specified image.
+python eval.py --trained_model=weights/yolact_base_54_800000.pth --score_threshold=0.15 --top_k=15 --image=my_image.png
+
+# Process an image and save it to another file.
+python eval.py --trained_model=weights/yolact_base_54_800000.pth --score_threshold=0.15 --top_k=15 --image=input_image.png:output_image.png
+
+# Process a whole folder of images.
+python eval.py --trained_model=weights/yolact_base_54_800000.pth --score_threshold=0.15 --top_k=15 --images=path/to/input/folder:path/to/output/folder
+
+
+# Display a video in real-time. "--video_multiframe" will process that many frames at once for improved performance.
+# If you want, use "--display_fps" to draw the FPS directly on the frame.
+python eval.py --trained_model=weights/yolact_base_54_800000.pth --score_threshold=0.15 --top_k=15 --video_multiframe=4 --video=my_video.mp4
+
+# Display a webcam feed in real-time. If you have multiple webcams pass the index of the webcam you want instead of 0.
+python eval.py --trained_model=weights/yolact_base_54_800000.pth --score_threshold=0.15 --top_k=15 --video_multiframe=4 --video=0
+
+# Process a video and save it to another file. This uses the same pipeline as the ones above now, so it's fast!
+python eval.py --trained_model=weights/yolact_base_54_800000.pth --score_threshold=0.15 --top_k=15 --video_multiframe=4 --video=input_video.mp4:output_video.mp4
+
+
+同时该代码也开放了训练程序，开发者可以很轻松在COCO 、Pascal SBD上训练模型，并添加 多GPU 支持。
+
+
+
+如果开发者想要在自己的数据集上训练实例分割，只需要有COCO风格的目标检测标注JSON数据即可。
+
+
+
+以下是分割结果示例：
+
+
+
+
+
+
+
+
+
+
+
+论文地址：
+
+https://arxiv.org/pdf/1912.06218.pdf
+
+开源地址：
+
+https://github.com/dbolya/yolact
+
+目前该代码已经获得 2K+ 颗星，是近期最热门的实例分割开源库。
